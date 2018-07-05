@@ -11,7 +11,6 @@ using MyStudentDAL.Models;
 
 namespace MyFirstWeb.Controllers
 {
-    [System.Web.Mvc.Authorize]
     public class StudentsController : Controller
     {
         //private Model db = new Model();

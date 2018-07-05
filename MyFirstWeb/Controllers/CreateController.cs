@@ -8,7 +8,6 @@ using MyStudentDAL.Models;
 
 namespace MyFirstWeb.Controllers
 {
-    [System.Web.Mvc.Authorize]
     public class CreateController : Controller
     {
         //private Model dbCntxt = new Model();
