@@ -9,6 +9,7 @@ using MyStudentDAL.Models;
 
 namespace MyFirstWeb.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class HomeController : Controller
     {
         // Create an instance of DatabaseContext class
