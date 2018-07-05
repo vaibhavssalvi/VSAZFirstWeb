@@ -1,6 +1,14 @@
 ﻿@model MyStudentDAL.Models.Students
-<div class="modal fade" tabindex="-1" id="delModal"
-     data-keyboard="false" data-backdrop="static">
+
+<br><br><br>
+<h2>Click on DELETE button to continue...</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<br><br><br>
+
+<div id="delModal"  class="modal hide" tabindex="-1"   data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -46,22 +54,16 @@
     </div>
 </div>
 
-@using (Html.BeginForm())
-{
-
-    <div class="form-actions no-color">
-        <input type="button" value="Delete" id="btnDel" class="btn btn-block btn-primary" />
-        <br><br><br>
-        @Html.ActionLink("Back to List", "Index", "Students")
-    </div>
+<!--input type="button" value="Delete" id="btnDel" class="btn btn-block btn-primary" click="DeleteMe()" /-->
+<a href="#" class="btn btn-danger" id="delRef" onclick="DeleteMe()">Delete</a>
 
 
-}
-<script>
-        $(document).ready(function () {
-            $("#btnDel").click(function () {
-                $('#delModal').modal('show');
-            });
-        });
+<script type="text/javascript">
+        var DeleteMe = function() {
+				//debugger
+				//alert("Deleted");            
+                $("#delModal").modal('show');
+            
+        };
 </script>
 

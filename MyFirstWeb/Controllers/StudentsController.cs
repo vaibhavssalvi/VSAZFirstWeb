@@ -15,8 +15,9 @@ namespace MyFirstWeb.Controllers
     {
         //private Model db = new Model();
         MyWebStudentContext db = new MyWebStudentContext();
-        
+
         // GET: Students
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             //var students = db.Students.Include(s => s.Ratings);
@@ -24,6 +25,7 @@ namespace MyFirstWeb.Controllers
         }
 
         // GET: Students/Details/5
+        [HttpGet]
         public async Task<ActionResult> Details(int? Id)
         {
             if (Id == null)
@@ -39,6 +41,7 @@ namespace MyFirstWeb.Controllers
         }
 
         // GET: Students/Create
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.Rating = new SelectList(db.Ratings, "Id", "Name");
@@ -97,29 +100,31 @@ namespace MyFirstWeb.Controllers
             //return RedirectToAction("Index", "Students");
         }
 
+        // GET PARTIAL: Students/Delete/5
+        [HttpGet]
+        public PartialViewResult ConfirmDelete(int? Id)
+        {
+            //if (Id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Students students = db.Students.Include(rtng => rtng.Ratings).FirstOrDefault(stu => stu.Id == Id);
+            //ViewBag.StudentObj = students;
+            //if (students == null) return HttpNotFound();
+            return PartialView("_Partial1", students);
+        }
+
         // GET: Students/Delete/5
+        [HttpGet]
         public async Task<ActionResult> Delete(int? Id)
         {
             if (Id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Students students = await db.Students.Include(rtng => rtng.Ratings).FirstOrDefaultAsync(stu => stu.Id == Id);
             if (students == null) return HttpNotFound();
-            //return View(students);
-            return Json(null, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET PARTIAL: Students/Delete/5
-        public ActionResult ConfirmDelete(int? Id)
-        {
-            if (Id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Students students = db.Students.Include(rtng => rtng.Ratings).FirstOrDefault(stu => stu.Id == Id);
-            //ViewBag.StudentObj = students;
-            if (students == null) return HttpNotFound();
-            return PartialView("_Partial1", students);
+            return View(students);
+            // return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
             Students students = await db.Students.FindAsync(id);
             db.Students.Remove(students);
